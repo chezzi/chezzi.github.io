@@ -1,0 +1,326 @@
+\ProvidesPackage{nbuthesis}
+
+% -------------------------  常规工具  ------------------------- %
+\RequirePackage{etoolbox,xcolor}
+
+
+% -------------------------  设置版式  ------------------------- %
+\RequirePackage{geometry}
+\RequirePackage{setspace}
+\geometry{
+    a4paper,
+    % includeheadfoot,
+    top=3cm, bottom=2.5cm, 
+    left=3cm, right=2cm,
+    headheight=15pt,
+    headsep=0.5cm, footskip=0.75cm
+}
+\setstretch{1.3}
+\setlength{\parindent}{2em}
+% -------------------------  设置字体  ------------------------- %
+% 免费商用 - 思源宋体 / 思源黑体 / 方正书宋 / 方正黑体 / 方正楷体
+% 授权商用 - Time New Roman系列 / 方正粗楷 / 
+\setmainfont[Path=./resource/font/,BoldFont = timesbd.ttf, ItalicFont = timesi.ttf]{times.ttf}
+\setsansfont[Path=./resource/font/, BoldFont = timesbd.ttf, ItalicFont = timesi.ttf]{times.ttf}
+
+\RequirePackage{fontspec, xunicode, xltxtra}
+\RequirePackage{xeCJK}
+\setCJKmainfont[Path=./resource/font/,BoldFont = {SourceHanSerifCN-SemiBold.otf}, ItalicFont = {FZFSK.TTF}]{FZSSK.TTF}
+\setCJKsansfont[Path=./resource/font/,BoldFont = {SourceHanSansCN-Medium.otf}]{FZHTK.TTF}
+\setCJKmonofont[Path=./resource/font/,BoldFont = {SourceHanSansCN-Medium.otf}]{FZHTK.TTF} %使用黑体代替等宽
+
+\newCJKfontfamily[zhsongti]\songti[BoldFont = {Path=./resource/font/,SourceHanSerifCN-SemiBold.otf}, ItalicFont = {FZFSK.TTF}]{FZSSK.TTF}
+\newCJKfontfamily[zhfangsong]\fangsong{FZFSK.TTF}
+\newCJKfontfamily[zhheiti]\heiti{FZHTK.TTF}[
+    Path = ./resource/font/, 
+    BoldFont = {SourceHanSansCN-Medium.otf}
+]
+% \newCJKfontfamily[zhkaiti]\kaiti[BoldFont = {Path=./resource/font/FZCKJW.TTF}]{FZKTK.TTF}  % FZCKJW 方正粗楷 商用授权字体
+\newCJKfontfamily[zhkaiti]\kaiti[Path=./resource/font/,BoldFont =FZCKJW.TTF]{FZHTK.TTF}  % FZCKJW 方正粗楷 商用授权字体
+%\newCJKfontfamily[zhkaiti]\kaiti[AutoFakeBold]{FZKTK.TTF}            % 方正楷体 伪粗体
+
+% -----------------------  设置页眉页脚  ----------------------- %
+\RequirePackage{fancyhdr}
+
+\fancypagestyle{titlepage}{
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+}
+
+\fancypagestyle{tablepage}{
+    \fancyhf{}
+    \fancyhead[C]{\ifodd\value{page}\zihao{5}\doctype\else\zihao{5}\thesistitle\fi}
+    \renewcommand{\headrulewidth}{1pt}
+}
+
+\fancypagestyle{mainpage}{
+    \fancyhf{}
+    \fancyhead[C]{\ifodd\value{page}\zihao{5}\doctype\else\zihao{5}\thesistitle\fi}
+    \renewcommand{\headrulewidth}{1pt}
+    \fancyfoot[C]{\thepage}
+}
+
+% -------------------------  图像宏包  ------------------------- %
+\RequirePackage{graphicx}
+
+% -----------------------  局部行距宏包  ----------------------- %
+\RequirePackage{setspace}
+
+
+% -----------------------  设置标题样式  ----------------------- %
+\ctexset{
+    chapter = {
+        name = {,},
+        number = \arabic{chapter},
+        format = \centering\zihao{-3}\sffamily,
+        aftername = \ \ ,
+        beforeskip = 0.45\baselineskip,
+        afterskip = 1.0\baselineskip,
+        fixskip = true,
+        pagestyle = mainpage,
+    },
+    section = {
+        format = \raggedright\zihao{4}\sffamily,
+        aftername = \ \ ,
+        beforeskip = 1.0\baselineskip,
+        afterskip = 1.0\baselineskip,
+        fixskip = true,
+    },
+    subsection = {
+        format = \raggedright\zihao{-4}\sffamily,
+        aftername = \ \ ,
+        beforeskip = 0.75\baselineskip,
+        afterskip = 0.55\baselineskip,
+        fixskip = true,
+    },
+    subsubsection = {
+        format = \raggedright\zihao{-4}\sffamily,
+        aftername = \ \ ,
+        beforeskip = 0.75\baselineskip,
+        afterskip = 0.55\baselineskip,
+        fixskip = true,
+    }
+}
+
+
+
+% -------------------------  目录调节  ------------------------- %
+\RequirePackage{titletoc}
+%\RequirePackage{tocloft}
+
+\titlecontents{chapter}
+    [0em]
+    {\vspace{-4pt}\filright\zihao{-4}\rmfamily}
+    {\contentspush{\thecontentslabel\ \ }}
+    {\hspace{0em}}
+    {{\mdseries\hspace{0.4em}\titlerule*[4pt]{.}}\contentspage}
+
+\titlecontents{section}
+    [1.5em]
+    {\vspace{-4pt}\filright\zihao{-4}\rmfamily}
+    {\contentspush{\thecontentslabel\ \ }}
+    {\hspace{0cm}}
+    {{\mdseries\hspace{0.2em}\titlerule*[4pt]{.}}\contentspage}
+
+\titlecontents{subsection}
+    [2.8em]
+    {\vspace{-4pt}\filright\zihao{-4}\rmfamily}
+    {\contentspush{\thecontentslabel\ \ }}
+    {\hspace{0cm}}
+    {{\mdseries\hspace{0.2em}\titlerule*[4pt]{.}}\contentspage}
+
+
+\makeatletter
+\renewcommand{\@pnumwidth}{0.2em{}}
+\makeatother
+\renewcommand\contentsname{\zihao{-2}{目\hspace{2em}录}}
+\newcommand{\tableformatset}{\ctexset{chapter/beforeskip=0.2\baselineskip}}
+\newcommand{\tableformatreset}{\ctexset{chapter/beforeskip=0.45\baselineskip}}
+
+
+% -------------------------  摘要调节  ------------------------- %
+\RequirePackage{mfirstuc}
+% 关键字格式化输出
+\newcounter{countargs}   %   count items in the list
+\newcounter{iterateargs} %   iterate over items in list
+\newcommand{\keywords}[2]{%
+\begingroup
+    \kwlabel  
+    \setcounter{countargs}{0}%
+    \renewcommand*{\do}[1]{\stepcounter{countargs}}%
+    \docsvlist{#1}%
+    \setcounter{iterateargs}{0}%
+    \renewcommand*{\do}[1]{%
+    \stepcounter{iterateargs}%
+    \raggedright
+    \printkeyword{##1}%
+    \ifnum\value{iterateargs}<\value{countargs}%
+    \keywordlistsep{#2}\    % <-- how to separate list items
+    \else\fi
+    }%
+    \docsvlist{#1}%
+\endgroup
+}
+% 关键字标签
+\newcommand{\kwlabel}{{\kwlabelfmt
+    关键词\quad%
+}}
+% 关键字标签格式
+\newcommand{\kwlabelfmt}{\sffamily}
+% 关键字格式
+\newcommand{\printkeyword}[1]{\kaiti\capitalisewords{#1}}
+% 关键字分隔符
+\newcommand{\keywordlistsep}[1]{#1}
+% 中文摘要环境
+\newenvironment{abstract}{
+    \tableformatset
+    % 1. 摘要标题：在 \chapter* 内部指定 \heiti，作用域仅限标题
+    \chapter*{\zihao{3}\heiti \thesistitle\\ \zihao{-3}\vspace{0.7em} 摘\hspace{2em}要}
+    \chaptermark{摘\hspace{2em}要}
+    \vspace{0.5em}
+
+    % 2. 关键词标签定义：在 \renewcommand 内部强制使用 \heiti
+    \renewcommand{\kwlabel}{%
+        {\heiti\kwlabelfmt 关键词：\quad}% 这里的括号保证了黑体只作用于“关键词”三个字
+    }
+
+    % 3. 摘要正文开始：在这里统一设置正文字体为楷体
+    % 注意：不要在这里放 \rmfamily，否则会覆盖楷体设置
+    \kaiti 
+}{
+    \par
+    \tableformatreset
+}
+
+% 英文摘要环境
+\newenvironment{abstractEN}{
+    \tableformatset
+    \chapter*{\zihao{-4}\bfseries \thesistitleEN\\ \vspace{0.7em} 
+	Abstract}
+    % \addcontentsline{toc}{chapter}{Abstract}%
+	\chaptermark{Abstract}
+    \vspace{0.5em}
+    \setlength{\parindent}{1em}
+    \renewcommand{\kwlabel}{{\kwlabelfmt \bfseries \zihao{5}
+        \hspace{-1em} Key Words:\quad%
+    }}
+    \rmfamily
+}{
+  \par
+  \tableformatreset
+}
+
+% -------------------------  图表格式  ------------------------- %
+% caption标签设置
+\RequirePackage{caption}
+\RequirePackage[labelformat=simple]{subcaption}
+\DeclareCaptionFont{captionfont}{ \fontsize{10.5bp}{14.5bp}\selectfont}
+\captionsetup[figure]{
+  format         = hang,
+  font           = captionfont,
+  labelsep       = quad,
+  aboveskip      = 6pt,
+  belowskip      = -8pt,
+  position = bottom,
+}
+\captionsetup[table]{
+  format         = hang,
+  font           = captionfont,
+  labelsep       = quad,
+  aboveskip      = 4pt,
+  belowskip      = 4pt,
+  position  = top,
+}
+\renewcommand\thefigure{\thechapter-\arabic{figure}}
+\renewcommand\thetable{\thechapter-\arabic{table}}
+\captionsetup[sub]{font=captionfont}
+\renewcommand{\thesubfigure}{(\alph{subfigure})}
+\renewcommand{\thesubtable}{(\alph{subtable})}
+% 浮动体间距设置
+\setlength{\floatsep}{7.5pt}
+% \setlength{\textfloatsep}{-4bp}
+\setlength{\intextsep}{7.5pt}
+\makeatletter
+\renewcommand\normalsize{%
+  \@setfontsize\normalsize{12bp}{14.4bp}
+  \abovedisplayskip 3\p@ \@plus1\p@ \@minus1\p@
+  \abovedisplayshortskip 2\p@
+  \belowdisplayshortskip 2\p@
+  \belowdisplayskip \abovedisplayskip}
+\normalsize
+\makeatother
+
+\RequirePackage{multirow}
+\RequirePackage{threeparttable}
+\RequirePackage{booktabs}
+\makeatletter
+\let\tableorig\table
+\def\table@i[#1]{\tableorig[#1]\renewcommand{\arraystretch}{1.5}\zihao{5}}   % with optional argument
+\def\table@ii{\tableorig\renewcommand{\arraystretch}{1.5}\zihao{5}}          % without optional argument
+\def\table{\@ifnextchar[\table@i \table@ii} % Redefine depending on presence of [
+\makeatother
+
+
+
+% -------------------------  列表格式  ------------------------- %
+\RequirePackage{enumitem}
+\setitemize[1]{leftmargin=3.5em,itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=0pt}
+\setenumerate[1]{leftmargin=3.5em,itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=0pt}
+
+% -------------------------  量和单位  ------------------------- %
+\RequirePackage{siunitx} % 单位格式化
+
+% -------------------------  参考文献  ------------------------- %
+%\citestyle{super}
+% \RequirePackage[backend=biber,style=gb7714-2015,gbtype=true, gbpunctin=false,gbpub=false, nohashothers=false, gbnamefmt =lowercase, doi=false]{biblatex}  % , gbbiblabel=plain
+% \DefineBibliographyStrings{english}{in={}}
+% \defbibheading{bibliography}[\bibname]{
+%     \chapter*{#1}
+%     \addcontentsline{toc}{chapter}{#1}
+% }
+% \setlength{\bibitemsep}{0em}
+% \setlength{\biblabelsep}{0.5em}
+% \renewcommand*{\bibfont}{\zihao{5}\selectfont}
+% \RequirePackage{url}
+% \RequirePackage{notoccite}%
+
+
+
+
+% -------------------------  致谢环境  ------------------------- %
+\makeatletter
+\newenvironment{acknowledgements}{%
+%   \@mainmatterfalse
+  \chapter*{致\hspace{1em}谢}
+  \addcontentsline{toc}{chapter}{致\hspace{1em}谢}
+}{
+  \par
+}
+\makeatother
+
+% -------------------------  代码环境  ------------------------- %
+\RequirePackage{minted}
+\usemintedstyle{colorful}
+\floatname{listing}{代码}
+\renewcommand{\thelisting}{\thechapter-\arabic{listing}}
+\captionsetup[listing]{
+  format         = hang,
+  font           = captionfont,
+  labelsep       = quad,
+  aboveskip      = 2pt,
+  belowskip      = -16pt,
+  position = bottom,
+}
+
+% --------------------------  超环境  -------------------------- %
+\RequirePackage[hidelinks]{hyperref}
+
+
+% ------------------------  自定义命令  ------------------------ %
+% 固定长度下划线
+\RequirePackage{ulem}
+\makeatletter
+\newcommand\dlmu[2][4cm]{\hskip1pt\uline{\hb@xt@ #1{\hss#2\hss}}\hskip3pt} 
+\makeatother
+
+
