@@ -5,6 +5,14 @@ const pageTitle = "我的个人网站";
 
 <html lang="zh-CN">
   <head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css"
+    />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{pageTitle}</title>
@@ -12,11 +20,33 @@ const pageTitle = "我的个人网站";
   <body>
     <h1>欢迎来到我的网站</h1>
     <p>我正在使用 Astro 构建我的个人空间。</p>
+
+    <nav>
+      <ul>
+        <li>
+          <a href="/schmidt-decomposition"> 📐 Schmidt 分解 – 介绍与证明 </a>
+        </li>
+      </ul>
+    </nav>
   </body>
 </html>
 
 <style>
   h1 {
     color: #2c7a4d;
+  }
+  nav ul {
+    list-style: none;
+    padding: 0;
+  }
+  nav li {
+    margin: 1rem 0;
+  }
+  a {
+    color: #0066cc;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
   }
 </style>
