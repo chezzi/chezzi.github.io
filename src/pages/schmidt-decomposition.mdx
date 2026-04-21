@@ -32,28 +32,52 @@ $$
 
 ## 2. 证明
 
-**2.1 奇异值分解**
+**2.1 奇异值分解(SVD)**
+
 设$S=M^\dagger M$，则$M$是一个非负的厄密矩阵，可对角化为
 
 $$
- S=V~\Sigma^2 ~V^\dagger= V~ diag\left(\lambda_1^2,\cdots,\lambda_r^2,0,\cdots,0\right)~ V^\dagger 
+ S=V~\Sigma^2 ~V^\dagger= V~ diag\left(\lambda_1^2,\cdots,\lambda_r^2,0,\cdots,0\right)~ V^\dagger ,
 $$
 
 其中$V$为酉矩阵，满足$V V^\dagger=1$。
 设$V$对应的归一化特征矢量基为$\{|v_i\rangle\}$，则$S~|v_i\rangle =\lambda_i^2|v_i\rangle(0\leq i\leq r),~S~|v_i\rangle =0(r<i\leq n)$
 定义另一组正交归一基$\{|u_i\rangle\}$为
 
+$$
+ |u_i\rangle=\frac{1}{\lambda_i}M~|v_i\rangle,
+$$
 
+$\{|u_i\rangle\}$满足$\langle u_i| u_j\rangle=\frac{1}{\lambda_i\lambda_j}\langle  v_i | S |v_j\rangle= \delta_{ij}$。
+于是$M$就可以分解为
 
-**Schmidt分解**
+$$
+ M= U \Sigma V^\dagger,
+$$
 
-设 $|\psi\rangle = \sum_{i,j} M_{ij} |i_A\rangle|j_B\rangle$，记矩阵 $M$ 的尺寸为 $m \times n$。根据矩阵的**奇异值分解 (SVD)**，存在酉矩阵 $U \in \mathbb{C}^{m \times m}$，$V \in \mathbb{C}^{n \times n}$ 以及一个矩形对角矩阵 $\Sigma \in \mathbb{C}^{m \times n}$，使得：
+因为
+
+$$
+ \begin{align*}
+    \left(U \Sigma V^\dagger\right)_{ij} &= \sum_{k,m} U_{ik} \Sigma_{km} V^*_{jm}\\
+    &=\sum_{k,m} \frac{1}{\lambda_k} (MV)_{ik} \lambda_k \delta_{km} V^*_{jm}\\
+    &=M_{il}V_{lk}V^*_{jk}\\
+    &=M_{ij}
+ \end{align*}
+$$
+
+**2.2 Schmidt分解**
+
+对于 $|\psi\rangle = \sum_{i,j} M_{ij} |i_A\rangle \otimes |j_B\rangle$,
+根据矩阵的**奇异值分解**，存在酉矩阵 $U \in \mathbb{C}^{m \times m}$，$V \in \mathbb{C}^{n \times n}$
+以及一个矩形对角矩阵 $\Sigma \in \mathbb{C}^{m \times n}$，使得：
 
 $$
 M = U \Sigma V^\dagger,
 $$
 
-其中 $\Sigma$ 的非零对角元为 $M$ 的奇异值 $\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_r > 0$，且 $r = \operatorname{rank}(M)$。
+其中 $\Sigma$ 的非零对角元为 $M$ 的奇异值 $\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_r > 0$，
+且 $r = \operatorname{rank}(M)$。
 
 定义新的基向量：
 
@@ -72,32 +96,28 @@ $$
 \end{aligned}
 $$
 
-由于 $|\psi\rangle$ 是归一化的，有 $\sum_k \lambda_k^2 = \operatorname{Tr}(M M^\dagger) = 1$。证毕。
+由于 $|\psi\rangle$ 是归一化的，有 $\sum_k \lambda_k^2 = \operatorname{Tr}(M M^\dagger) = 1$。
 
-## 4. 重要推论与性质
+**约化密度矩阵表示**
 
-- **唯一性**：Schmidt 系数 $\{\lambda_i\}$ 由态 $|\psi\rangle$ 唯一确定（不考虑简并时的排列），而基 $\{|u_i\rangle\}, \{|v_i\rangle\}$ 在奇异值简并时存在 $U(1)$ 自由度。
-- **Schmidt 秩与纠缠**：$|\psi\rangle$ 是可分离态（直积态）当且仅当 Schmidt 秩 $r=1$；若 $r>1$，则态是纠缠态。
-- **约化密度矩阵**：子系统 $A$ 的约化密度矩阵为 $\rho_A = \sum_i \lambda_i^2 |u_i\rangle\langle u_i|$，von Neumann 纠缠熵为 $S(\rho_A) = -\sum_i \lambda_i^2 \log \lambda_i^2$。
-
-## 5. 具体例子 (Bell 态)
-
-考虑一个 Bell 态 $|\Phi^+\rangle = \frac{1}{\sqrt{2}}(|00\rangle + |11\rangle)$。此时系数矩阵为：
+对$|\psi\rangle$关于 $B$ 取偏迹得到 $A$ 的密度矩阵 $\rho_A= \operatorname{Tr}_B |\psi\rangle \langle\psi|$。
+$\rho_A$可以由一组正交归一基$\{|u_i\rangle\}$对角化
 
 $$
-M = \frac{1}{\sqrt{2}}\begin{pmatrix}1 & 0 \\ 0 & 1\end{pmatrix}.
+ \rho_A=\sum_i \lambda_i^2 |u_i\rangle \langle u_i|.
 $$
 
-对应的 Schmidt 分解为：
+同时可以得到 $B$ 上的一组正交归一基$\{|v_i\rangle\}$ 满足
 
 $$
-|\Phi^+\rangle = \frac{1}{\sqrt{2}} |0\rangle|0\rangle + \frac{1}{\sqrt{2}} |1\rangle|1\rangle.
+ |v_i\rangle= \frac{1}{\lambda_i} \left(\langle u_i| \otimes I\right)|\psi\rangle,\\
+ \langle\psi| \big( |u_i\rangle\langle u_i| \otimes I \big) |\psi\rangle = \operatorname{Tr}\big( |\psi\rangle\langle\psi| \cdot (|u_i\rangle\langle u_i| \otimes I) \big) = \operatorname{Tr}_A(\rho_A).
 $$
 
-Schmidt 秩 $r=2$，表明该态是最大纠缠态。
+所以$|\psi\rangle$可以表示为
 
-## 6. 总结
-
-Schmidt 分解提供了一个“对角化”复合系统纯态的规范形式，它揭示了子系统之间的关联结构。该分解是理解量子纠缠、量子信息压缩以及量子通信协议（如纠缠蒸馏）的数学基础。
+$$
+ |\psi\rangle = \sum_{i=1}^{r} \lambda_i \, |u_i\rangle \otimes |v_i\rangle.
+$$
 
 ---
