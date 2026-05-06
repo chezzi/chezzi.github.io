@@ -2,7 +2,7 @@
 const { title, description } = Astro.props;
 ---
 
-<!Doctype html>
+<!doctype html>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
@@ -59,6 +59,51 @@ const { title, description } = Astro.props;
       .container {
         max-width: var(--max-width);
         margin: 0 auto;
+        position: relative;
+      }
+
+      .back-button {
+        position: fixed;
+        top: 25px;
+        left: 30px;
+        background: var(--bg);
+        color: var(--link);
+        padding: 10px 16px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-size: 1rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        transition: all 0.3s ease;
+        border: 1px solid var(--border);
+      }
+
+      .back-button:hover {
+        background: var(--accent);
+        color: white;
+        transform: translateX(4px);
+        box-shadow: 0 6px 16px rgba(44, 122, 77, 0.3);
+      }
+
+      /* 暗色模式适配 */
+      @media (prefers-color-scheme: dark) {
+        .back-button {
+          background: #2d2d2d;
+          border-color: #444;
+        }
+      }
+
+      /* 小屏幕适配 */
+      @media (max-width: 768px) {
+        .back-button {
+          top: 15px;
+          right: 15px;
+          padding: 8px 14px;
+          font-size: 0.95rem;
+        }
       }
 
       h1,
@@ -127,6 +172,11 @@ const { title, description } = Astro.props;
     </style>
   </head>
   <body>
+    <!-- 返回按钮 -->
+    <div class="back-link">
+      <a href="javascript:history.back()" class="back-button"> ← 返回 </a>
+    </div>
+
     <div class="container">
       <slot />
       <!-- 这里会插入 .mdx 文件的内容 -->
