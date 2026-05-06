@@ -5,12 +5,22 @@ layout: "../layouts/Layout.astro"
 ---
 
 # Lindblad方程
-波函数为$\Psi_v\prod=$
+总的Hilbert空间由环境和系统的Hilbert空间直积形成
+$$
+ \mathcal{E} = \mathcal{E}_S \otimes \mathcal{E}_E,
+$$
+
+作用量为
+$$
+ H=H_S \otimes I_E + I_S \otimes H_E + g H_{int},
+$$
+其中$g$为系数，用以保证相互作用可以作为微扰展开。
+密度矩阵为
+$$
+ \rho=\rho_S \otimes \rho_E + \rho_{correl}
+$$
 密度矩阵$\hat{\rho}_v=|\Psi_v\rangle \langle \Psi_v |$
+波函数为$\Psi_v\prod=$
 
 
-
-设哈密顿量为
-$$
-  H=H_0+H_{int}
-$$
+---
