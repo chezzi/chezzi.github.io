@@ -12,19 +12,47 @@ $$
 
 作用量为
 $$
- H=H_S \otimes I_E + I_S \otimes H_E + g H_{int},
+ H=H_0 + g H _{int}=H_S \otimes I_E + I_S \otimes H_E + g H_{int},
 $$
 其中$g$为系数，用以保证相互作用可以作为微扰展开。
 $v(\eta,\boldsymbol{x})$为Mukhanov-Sasaki变量，
 $\eta$为共形时间，$\boldsymbol{x}$为共形坐标。
-在线性阶自由Halmiton作用量表示为$\hat{H}_v$,其可以用$v$及其共轭动量表示为
+在线性阶自由Halmiton作用量表示为$\hat{H}_v=H_0$, 其可以用$v$及其共轭动量表示为
 $$
  \hat{H}_v=\int d^3k \hat{\mathcal{H}}_{\boldsymbol{k}}=\frac{1}{2}\int d^3k \left[ \hat{p}_{\boldsymbol{k}}\hat{p}_{\boldsymbol{k}}^\dagger + \omega^2(\eta,\boldsymbol{k})\hat{v}_{\boldsymbol{k}}\hat{v}_{\boldsymbol{k}}^\dagger\right] ,
 $$
 可以看到Halmiton量为正则形式，当初始条件为Gaussian波时，后续会一直保持Gaussian波的形式。
-密度矩阵为
+密度矩阵$\rho$的演化满足
 $$
- \rho=\rho_S \otimes \rho_E + \rho_{correl}
+ i\frac{d\rho}{dt}=\left[H,\rho(t)\right].
+$$
+在相互作用表象下
+$$
+ \tilde{\rho}(t)=U^\dagger(t)\rho(t)U(t)\\
+ \tilde{H}_{int}(t)=U^\dagger(t)H_{int}(t)U(t)
+$$
+其中$U(t)=exp[-i\int^t_0 H_0(t')dt']$, 满足
+$$
+ i\frac{dU}{dt}=H_0(t)U(t).
+$$
+于是可以得到
+$$
+ \frac{d\tilde{\rho}}{dt}=-ig\left[\tilde{H}_{int},\tilde{\rho}(t)\right],
+$$
+
+通过迭代法可以得到$\tilde{\rho}(t)$的表达式为
+$$
+ \tilde{\rho}(t + \Delta t) - \tilde{\rho}(t)
+= -ig \int_t^{t + \Delta t} dt'[\tilde{H}_{int}(t'), \tilde{\rho}(t)] - g^2 \int_t^{t + \Delta t} dt'\int_t^{t'} \mathrm{d}t'' [\tilde{H}_{int}(t'), [\tilde{H}_{int}(t''), \tilde{\rho}(t)]]+ \mathcal{O}(g^3).
+$$
+
+密度矩阵可以分解为
+$$
+ \rho=\rho_S \otimes \rho_E + g^p \rho_{correl},
+$$
+满足
+$$
+ \mathrm{Tr}_E (\rho) \equiv \rho_S = \rho_S\mathrm{Tr}_E(\rho_E)+g^p \mathrm{Tr}_E(\rho_{correl})\rightarrow \mathrm{Tr}_E(\rho_{correl})=\mathrm{Tr}_S(\rho_{correl})=0
 $$
 密度矩阵$\hat{\rho}_v=|\Psi_v\rangle \langle \Psi_v |$
 波函数为$\Psi_v\prod=$
