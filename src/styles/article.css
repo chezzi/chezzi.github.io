@@ -1,0 +1,18 @@
+.article-container {
+    padding: 3rem 2rem;
+}
+
+.article-content {
+    line-height: 1.9;
+    font-size: 1.05rem;
+}
+
+.article-content h1,
+.article-content h2,
+.article-content h3 {
+    margin-top: 2rem;
+}
+
+.article-content p {
+    margin: 1rem 0;
+}

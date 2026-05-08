@@ -1,7 +1,12 @@
 ---
-title: "暴涨期间的退相干"
-description: "暴涨期间退相干的讨论"
-layout: "../layouts/Layout.astro"
+title: Lindblad Equation in Inflation
+description: Derivation of the reduced density matrix
+date: 2026-05-08
+
+tags:
+  - inflation
+  - decoherence
+  - lindblad
 ---
 
 # Lindblad方程
@@ -42,8 +47,11 @@ $$
 
 通过迭代法可以得到$\tilde{\rho}(t)$的表达式为
 $$
- \tilde{\rho}(t + \Delta t) - \tilde{\rho}(t)
-= -ig \int_t^{t + \Delta t} dt'[\tilde{H}_{int}(t'), \tilde{\rho}(t)] - g^2 \int_t^{t + \Delta t} dt'\int_t^{t'} \mathrm{d}t'' [\tilde{H}_{int}(t'), [\tilde{H}_{int}(t''), \tilde{\rho}(t)]]+ \mathcal{O}(g^3).
+ \begin{align}
+     \tilde{\rho}(t + \Delta t) - \tilde{\rho}(t)
+     \label{evolution_of_density_matrix}
+     = -ig \int_t^{t + \Delta t} dt'[\tilde{H}_{int}(t'), \tilde{\rho}(t)] - g^2 \int_t^{t + \Delta t} dt'\int_t^{t'} \mathrm{d}t'' [\tilde{H}_{int}(t'), [\tilde{H}_{int}(t''), \tilde{\rho}(t)]]+ \mathcal{O}(g^3).
+ \end{align}
 $$
 
 密度矩阵可以分解为
@@ -54,6 +62,7 @@ $$
 $$
  \mathrm{Tr}_E (\rho) \equiv \rho_S = \rho_S\mathrm{Tr}_E(\rho_E)+g^p \mathrm{Tr}_E(\rho_{correl})\rightarrow \mathrm{Tr}_E(\rho_{correl})=\mathrm{Tr}_S(\rho_{correl})=0
 $$
+对方程 $\eqref{evolution_of_density_matrix}$
 密度矩阵$\hat{\rho}_v=|\Psi_v\rangle \langle \Psi_v |$
 波函数为$\Psi_v\prod=$
 

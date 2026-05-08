@@ -21,9 +21,13 @@
     "preview": "astro preview"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.9",
     "@astrojs/mdx": "^5.0.3",
-    "astro": "^6.1.6",
-    "rehype-katex": "^7.0.1",
-    "remark-math": "^6.0.0"
+    "astro": "^6.3.1",
+    "remark-math": "^6.0.0",
+    "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.2"
   }
 }

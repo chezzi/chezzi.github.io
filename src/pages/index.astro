@@ -1,59 +1,38 @@
 ---
-// 这里是组件脚本（可选）
-const pageTitle = "我的_物理笔记";
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const posts = (await getCollection("posts", ({ data }) => !data.draft)).sort(
+  (a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0),
+);
 ---
 
-<html lang="zh-CN">
-  <head>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css"
-    />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{pageTitle}</title>
-  </head>
-  <body>
-    <h1>欢迎来到我的网站</h1>
-    <p>目前用于记录平时的笔记</p>
-    <nav>
-      <ul>
-        <li>
-          <a href="/schmidt-decomposition"> Schmidt 分解 </a>
-        </li>
-      </ul>
-    </nav>
+<BaseLayout>
+  <section class="note-list">
+    <h2>Notes</h2>
 
-    <nav>
-      <ul>
-        <li>
-          <a href="/decoherence_within_inflation"> 暴涨退相干 </a>
-        </li>
-      </ul>
-    </nav>
-  </body>
-</html>
-
-<style>
-  h1 {
-    color: #2c7a4d;
-  }
-  nav ul {
-    list-style: none;
-    padding: 0;
-  }
-  nav li {
-    margin: 1rem 0;
-  }
-  a {
-    color: #0066cc;
-    text-decoration: none;
-  }
-  a:hover {
-    text-decoration: underline;
-  }
-</style>
+    {
+      posts.length === 0 ? (
+        <p>No notes yet.</p>
+      ) : (
+        <ul>
+          {posts.map((post) => (
+            <li>
+              <a href={`/posts/${post.id}/`}>{post.data.title}</a>
+              {post.data.date && (
+                <time datetime={post.data.date.toISOString()}>
+                  {post.data.date.toLocaleDateString("en", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </time>
+              )}
+              {post.data.description && <p>{post.data.description}</p>}
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+</BaseLayout>

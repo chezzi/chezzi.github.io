@@ -1,0 +1,67 @@
+body {
+    margin: 0;
+    padding: 0;
+
+    background: #0b0f14;
+    color: #e6edf3;
+
+    font-family: system-ui;
+}
+
+a {
+    color: #7cc7ff;
+    text-decoration: none;
+}
+
+main {
+    max-width: 900px;
+    margin: auto;
+}
+
+.site-container {
+    padding: 3rem 2rem;
+}
+
+.site-header {
+    margin-bottom: 3rem;
+}
+
+.site-header h1 {
+    margin: 0;
+}
+
+.site-header p {
+    color: #9aa7b2;
+}
+
+.note-list h2 {
+    margin-bottom: 1rem;
+}
+
+.note-list ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.note-list li {
+    border-top: 1px solid #26313d;
+    padding: 1.25rem 0;
+}
+
+.note-list a {
+    font-size: 1.1rem;
+    font-weight: 650;
+}
+
+.note-list time {
+    color: #9aa7b2;
+    display: block;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+.note-list p {
+    color: #c4ccd4;
+    margin: 0.5rem 0 0;
+}
