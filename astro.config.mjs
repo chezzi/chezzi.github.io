@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import remarkMath from 'remark-math';
+import remarkLatexStructure from './src/lib/remarkLatexStructure.mjs';
 import rehypeMathjaxDelimiters from './src/lib/rehypeMathjaxDelimiters.mjs';
 
 export default defineConfig({
@@ -13,7 +14,7 @@ export default defineConfig({
       theme: 'github-dark',
       wrap: true,
     },
-    remarkPlugins: [remarkMath],
+    remarkPlugins: [remarkLatexStructure, remarkMath],
     rehypePlugins: [rehypeMathjaxDelimiters],
   },
 

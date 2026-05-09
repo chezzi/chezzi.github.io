@@ -1,122 +1,304 @@
 ---
-title: "Schmidt 分解 - 介绍与证明"
-description: "量子力学中 Schmidt 分解的详细数学介绍与奇异值分解证明"
+title: "Schmidt 分解：介绍与证明"
+description: "量子力学中 Schmidt 分解的数学结构、奇异值分解证明及约化密度矩阵表示"
 ---
 
-# Schmidt 分解 (Schmidt Decomposition)
-
-## 1. 定理
+\chapter\{定理\}
 
 考虑一个由子系统 $A$ 和 $B$ 组成的复合量子系统，
-其希尔伯特空间为 $\mathcal{H} = \mathcal{H}_A \otimes \mathcal{H}_B$，
-其中 $\dim \mathcal{H}_A = m$，$\dim \mathcal{H}_B = n$。
-系统的任意纯态可以表示为：
+其希尔伯特空间为
 
 $$
-|\psi\rangle = \sum_{i=1}^{m} \sum_{j=1}^{n} M_{ij} \, |i_A\rangle \otimes |j_B\rangle,
+\mathcal H = \mathcal H_A \otimes \mathcal H_B,
 $$
 
-其中 $\{|i_A\rangle\}$ 和 $\{|j_B\rangle\}$ 分别是 $\mathcal{H}_A$ 和 $\mathcal{H}_B$ 的正交归一基，
-系数矩阵 $M \in \mathbb{C}^{m \times n}$ 满足 $\langle\psi|\psi\rangle = M^\dagger M = 1$。
-
-存在 $\mathcal{H}_A$ 中的正交归一基 $\{|u_i\rangle\}$ 和 $\mathcal{H}_B$ 中的正交归一基 $\{|v_i\rangle\}$，
-以及非负实数 $\lambda_i$（称为 Schmidt 系数），使得：
+其中
 
 $$
-|\psi\rangle = \sum_{i=1}^{r} \lambda_i \, |u_i\rangle \otimes |v_i\rangle,
+\dim \mathcal H_A = m,
+\qquad
+\dim \mathcal H_B = n.
 $$
 
-其中 $r = \operatorname{rank}(M)$ 称为 **Schmidt 秩**，
-且 $\lambda_i > 0$，$\sum_{i=1}^{r} \lambda_i^2 = 1$。
-
-## 2. 证明
-
-**2.1 奇异值分解(SVD)**
-
-设$S=M^\dagger M$，则$M$是一个非负的厄密矩阵，可对角化为
+任意**纯态**都可以表示为
 
 $$
- S=V~\Sigma^2 ~V^\dagger= V~ diag\left(\lambda_1^2,\cdots,\lambda_r^2,0,\cdots,0\right)~ V^\dagger ,
+\ket{\psi}
+=
+\sum_{i=1}^m
+\sum_{j=1}^n
+M_{ij}
+\ket{i_A}\otimes\ket{j_B},
 $$
 
-其中$V$为酉矩阵，满足$V V^\dagger=1$。
-设$V$对应的归一化特征矢量基为$\{|v_i\rangle\}$，则$S~|v_i\rangle =\lambda_i^2|v_i\rangle(0\leq i\leq r),~S~|v_i\rangle =0(r<i\leq n)$
-定义另一组正交归一基$\{|u_i\rangle\}$为
+其中 $\{\ket{i_A}\}$ 与 $\{\ket{j_B}\}$ 分别是
+$\mathcal H_A$ 与 $\mathcal H_B$ 的正交归一基，
+系数矩阵
 
 $$
- |u_i\rangle=\frac{1}{\lambda_i}M~|v_i\rangle,
+M\in\mathbb C^{m\times n}
 $$
 
-$\{|u_i\rangle\}$满足$\langle u_i| u_j\rangle=\frac{1}{\lambda_i\lambda_j}\langle  v_i | S |v_j\rangle= \delta_{ij}$。
-于是$M$就可以分解为
+满足归一化条件
 
 $$
- M= U \Sigma V^\dagger,
+\braket{\psi|\psi}
+=
+\operatorname{Tr}(M^\dagger M)
+=
+1.
 $$
 
-因为
+---
+
+**Schmidt 分解定理**
+
+存在 $\mathcal H_A$ 中的一组正交归一基
+$\{\ket{u_i}\}$，
+以及 $\mathcal H_B$ 中的一组正交归一基
+$\{\ket{v_i}\}$，
+使得任意纯态都可以写成
 
 $$
- \begin{align*}
-    \left(U \Sigma V^\dagger\right)_{ij} &= \sum_{k,m} U_{ik} \Sigma_{km} V^*_{jm}\\
-    &=\sum_{k,m} \frac{1}{\lambda_k} (MV)_{ik} \lambda_k \delta_{km} V^*_{jm}\\
-    &=M_{il}V_{lk}V^*_{jk}\\
-    &=M_{ij}
- \end{align*}
+\ket{\psi}
+=
+\sum_{i=1}^r
+\lambda_i
+\ket{u_i}\otimes\ket{v_i},
 $$
 
-**2.2 Schmidt分解**
+其中：
 
-对于 $|\psi\rangle = \sum_{i,j} M_{ij} |i_A\rangle \otimes |j_B\rangle$,
-根据矩阵的**奇异值分解**，存在酉矩阵 $U \in \mathbb{C}^{m \times m}$，$V \in \mathbb{C}^{n \times n}$
-以及一个矩形对角矩阵 $\Sigma \in \mathbb{C}^{m \times n}$，使得：
+- $\lambda_i>0$ 为 Schmidt 系数；
+- $\sum_{i=1}^r\lambda_i^2=1$；
+- $r=\operatorname{rank}(M)$ 称为该态的 **Schmidt 秩** (Schmidt rank)。
 
-$$
-M = U \Sigma V^\dagger,
-$$
-
-其中 $\Sigma$ 的非零对角元为 $M$ 的奇异值 $\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_r > 0$，
-且 $r = \operatorname{rank}(M)$。
-
-定义新的基向量：
+通常约定
 
 $$
-|u_i\rangle = \sum_{k=1}^{m} U_{ki} |k_A\rangle, \quad |v_i\rangle = \sum_{l=1}^{n} V_{li}^* |l_B\rangle.
+\lambda_1\ge\lambda_2\ge\cdots\ge\lambda_r>0.
 $$
 
-由于 $U$ 和 $V$ 是酉矩阵，$\{|u_i\rangle\}_{i=1}^m$ 和 $\{|v_i\rangle\}_{i=1}^n$ 分别是 $\mathcal{H}_A$ 和 $\mathcal{H}_B$ 的标准正交基。
+---
 
-将分解代入态矢量：
+\chapter\{证明\}
+
+\section\{奇异值分解 (Singular Value Decomposition)\}
+
+定义
+
+$$
+S=M^\dagger M.
+$$
+
+由于 $S$ 是半正定厄密矩阵，因此可以被酉对角化：
+
+$$
+S
+=
+V\Sigma^2V^\dagger,
+$$
+
+其中
+
+$$
+\Sigma
+=
+\operatorname{diag}
+(\lambda_1,\cdots,\lambda_r,0,\cdots,0),
+$$
+
+$V$ 为酉矩阵，
+
+$$
+VV^\dagger=V^\dagger V=I.
+$$
+
+设 $\{\ket{v_i}\}$ 为 $S$ 的归一化本征矢量：
+
+$$
+S\ket{v_i}
+=
+\lambda_i^2\ket{v_i}.
+$$
+
+对于所有 $\lambda_i>0$，
+定义
+
+$$
+\ket{u_i}
+=
+\frac1{\lambda_i}M\ket{v_i}.
+$$
+
+验证其正交归一性：
 
 $$
 \begin{aligned}
-|\psi\rangle &= \sum_{i,j} (U \Sigma V^\dagger)_{ij} \, |i_A\rangle|j_B\rangle \\
-&= \sum_{k=1}^{r} \lambda_k \, |u_k\rangle \otimes |v_k\rangle.
+\braket{u_i|u_j}
+&=
+\frac1{\lambda_i\lambda_j}
+\bra{v_i}M^\dagger M\ket{v_j}
+\\
+&=
+\frac1{\lambda_i\lambda_j}
+\bra{v_i}S\ket{v_j}
+\\
+&=
+\delta_{ij}.
 \end{aligned}
 $$
 
-由于 $|\psi\rangle$ 是归一化的，有 $\sum_k \lambda_k^2 = \operatorname{Tr}(M M^\dagger) = 1$。
+因此 $\{\ket{u_i}\}$ 构成一组正交归一向量。
 
-**约化密度矩阵表示**
-
-对$|\psi\rangle$关于 $B$ 取偏迹得到 $A$ 的密度矩阵 $\rho_A= \operatorname{Tr}_B |\psi\rangle \langle\psi|$。
-$\rho_A$可以由一组正交归一基$\{|u_i\rangle\}$对角化
+进一步有
 
 $$
- \rho_A=\sum_i \lambda_i^2 |u_i\rangle \langle u_i|.
+\begin{align}\label{relation:A_B}
+M\ket{v_i}
+=
+\lambda_i\ket{u_i}.
+\end{align}
 $$
 
-同时可以得到 $B$ 上的一组正交归一基$\{|v_i\rangle\}$ 满足
+于是利用正交归一得到
 
 $$
- |v_i\rangle= \frac{1}{\lambda_i} \left(\langle u_i| \otimes I\right)|\psi\rangle,\\
- \langle\psi| \big( |u_i\rangle\langle u_i| \otimes I \big) |\psi\rangle = \operatorname{Tr}\big( |\psi\rangle\langle\psi| \cdot (|u_i\rangle\langle u_i| \otimes I) \big) = \operatorname{Tr}_A(\rho_A).
+\begin{align}\label{matrix:M}
+M
+=
+\sum_{i=1}^r
+\lambda_i
+\ket{u_i}\bra{v_i}.
+\end{align}
 $$
 
-所以$|\psi\rangle$可以表示为
+这就是矩阵 $M$ 的奇异值分解：
 
 $$
- |\psi\rangle = \sum_{i=1}^{r} \lambda_i \, |u_i\rangle \otimes |v_i\rangle.
+M=U\Sigma V^\dagger.
 $$
+
+---
+
+\section\{Schmidt 分解\}
+
+对于双体纯态
+
+$$
+\ket{\psi}
+=
+\sum_{i,j}
+M_{ij}
+\ket{i_A}\otimes\ket{j_B},
+$$
+
+
+利用 \eqref\{relation:A_B\} 与 \eqref\{matrix:M\} 即可得到
+
+$$
+\begin{aligned}
+\ket{\psi}
+&=
+\sum_{i,j}
+M_{ij}
+\ket{i_A}\otimes\ket{j_B}
+\\
+&=
+\sum_{k=1}^r
+\lambda_k
+\ket{u_k}\otimes\ket{v_k}.
+\end{aligned}
+$$
+
+这就是 Schmidt 分解。
+
+由于态已经归一化，因此
+
+$$
+\sum_{k=1}^r\lambda_k^2=1.
+$$
+
+---
+
+\chapter\{约化密度矩阵表示\}
+
+定义纯态密度矩阵
+
+$$
+\rho
+=
+\ket{\psi}\bra{\psi}.
+$$
+
+对系统 $B$ 取偏迹得到子系统 $A$ 的约化密度矩阵：
+
+$$
+\rho_A
+=
+\operatorname{Tr}_B(\rho).
+$$
+
+利用 Schmidt 分解，
+
+$$
+\ket{\psi}
+=
+\sum_i
+\lambda_i
+\ket{u_i}\otimes\ket{v_i},
+$$
+
+可得
+
+$$
+\rho_A
+=
+\sum_i
+\lambda_i^2
+\ket{u_i}\bra{u_i}.
+$$
+
+因此：
+
+- Schmidt 系数平方 $\lambda_i^2$ 正是约化密度矩阵的本征值；
+- $\{\ket{u_i}\}$ 是 $\rho_A$ 的本征基。
+
+类似地，
+
+$$
+\rho_B
+=
+\sum_i
+\lambda_i^2
+\ket{v_i}\bra{v_i}.
+$$
+
+因此 $\rho_A$ 与 $\rho_B$ 具有相同的非零谱。
+
+---
+
+\chapter\{与纠缠熵的关系\}
+
+Schmidt 系数直接决定双体系统的纠缠结构。
+
+von Neumann 纠缠熵为
+
+$$
+S(\rho_A)
+=
+-\operatorname{Tr}(\rho_A\log\rho_A)
+=
+-\sum_i
+\lambda_i^2
+\log\lambda_i^2.
+$$
+
+因此：
+
+- 当仅有一个 Schmidt 系数非零时，
+  态为可分态 (product state)；
+- 当存在多个非零 Schmidt 系数时，
+  态为纠缠态 (entangled state)。
 
 ---

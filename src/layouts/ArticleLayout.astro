@@ -1,15 +1,30 @@
 ---
 import "../styles/global.css";
 import "../styles/article.css";
+import ThemeSwitcher from "../components/ThemeSwitcher.astro";
 
 const { post } = Astro.props;
 const { title, description, date } = post.data;
+const headings = Astro.props.headings ?? [];
+const outlineHeadings = headings.filter(
+  (heading) => heading.depth >= 2 && heading.depth <= 4,
+);
 ---
 
-<html lang="en">
+<html lang="en" data-theme="paper">
   <head>
     <meta charset="UTF-8" />
+    <meta name="color-scheme" content="light dark" />
     <title>{title}</title>
+    <script is:inline>
+      try {
+        const savedTheme = localStorage.getItem("chezzi-theme");
+        if (savedTheme) {
+          document.documentElement.dataset.theme = savedTheme;
+        }
+      } catch {
+      }
+    </script>
     <script is:inline>
       window.MathJax = {
         tex: {
@@ -49,6 +64,11 @@ const { title, description, date } = post.data;
 
   <body>
     <main class="article-container">
+      <div class="article-toolbar">
+        <a href="/">Notes</a>
+        <ThemeSwitcher />
+      </div>
+
       <header class="article-header">
         <h1>{title}</h1>
 
@@ -67,9 +87,63 @@ const { title, description, date } = post.data;
         }
       </header>
 
-      <article class="article-content">
-        <slot />
-      </article>
+      <div class="article-reader">
+        <article class="article-content">
+          <slot />
+        </article>
+
+        {
+          outlineHeadings.length > 0 && (
+            <nav class="article-outline" aria-label="Article outline">
+              <p>Outline</p>
+              <ol>
+                {outlineHeadings.map((heading) => (
+                  <li class={`depth-${heading.depth}`}>
+                    <a href={`#${heading.slug}`}>{heading.text}</a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          )
+        }
+      </div>
     </main>
+    <script is:inline>
+      const article = document.querySelector(".article-content");
+      const sectionHeadings = article
+        ? Array.from(article.querySelectorAll("h2, h3, h4, h5"))
+        : [];
+
+      sectionHeadings.forEach((heading) => {
+        if (heading.closest("summary")) return;
+
+        const details = document.createElement("details");
+        const summary = document.createElement("summary");
+        const depth = Number(heading.tagName.slice(1));
+
+        details.className = `article-section depth-${depth}`;
+        details.open = true;
+
+        heading.before(details);
+        details.append(summary);
+        summary.append(heading);
+
+        let sibling = details.nextSibling;
+        while (sibling) {
+          const next = sibling;
+          sibling = sibling.nextSibling;
+
+          if (
+            next.nodeType === Node.ELEMENT_NODE &&
+            /^H[2-5]$/.test(next.tagName) &&
+            Number(next.tagName.slice(1)) <= depth
+          ) {
+            break;
+          }
+
+          details.append(next);
+        }
+      });
+    </script>
   </body>
 </html>

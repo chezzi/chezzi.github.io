@@ -10,6 +10,12 @@ function textValue(node) {
   return node.children.map(textValue).join("");
 }
 
+function withInlineMathRefs(value) {
+  return value.replace(/(^|[^$\\])\\(eqref|ref)\\?\{([^{}]+)\\?\}/g, (_, prefix, command, label) => {
+    return `${prefix}$\\${command}{${label}}$`;
+  });
+}
+
 export default function rehypeMathjaxDelimiters() {
   return (tree) => {
     function walk(node) {
@@ -41,6 +47,15 @@ export default function rehypeMathjaxDelimiters() {
             type: "text",
             value: `$$\n${textValue(child.children[0])}\n$$`,
           };
+          continue;
+        }
+
+        if (child.type === "element" && ["code", "pre", "script", "style"].includes(child.tagName)) {
+          continue;
+        }
+
+        if (child.type === "text") {
+          child.value = withInlineMathRefs(child.value);
           continue;
         }
 

@@ -1,0 +1,67 @@
+<div class="theme-switcher" aria-label="Theme">
+  <div class="setting-group" aria-label="Theme">
+    <button type="button" data-theme-option="paper" aria-pressed="false">
+      Paper
+    </button>
+    <button type="button" data-theme-option="mist" aria-pressed="false">
+      Mist
+    </button>
+    <button type="button" data-theme-option="dark" aria-pressed="false">
+      Dark
+    </button>
+  </div>
+</div>
+
+<script>
+  const themeStorageKey = "chezzi-theme";
+  const themeFallback = "paper";
+  const themeButtons = document.querySelectorAll<HTMLButtonElement>(
+    "[data-theme-option]",
+  );
+
+  const readTheme = () => {
+    try {
+      return (
+        localStorage.getItem(themeStorageKey) ||
+        document.documentElement.dataset.theme ||
+        themeFallback
+      );
+    } catch {
+      return document.documentElement.dataset.theme || themeFallback;
+    }
+  };
+
+  const saveSetting = (storageKey: string, value: string) => {
+    try {
+      localStorage.setItem(storageKey, value);
+    } catch {
+      // The setting still applies for this page load if browser storage is disabled.
+    }
+  };
+
+  const syncPressed = (
+    buttons: NodeListOf<HTMLButtonElement>,
+    optionName: "themeOption",
+    value: string,
+  ) => {
+    buttons.forEach((button) => {
+      button.setAttribute("aria-pressed", String(button.dataset[optionName] === value));
+    });
+  };
+
+  const applyTheme = (theme: string) => {
+    document.documentElement.dataset.theme = theme;
+    saveSetting(themeStorageKey, theme);
+    syncPressed(themeButtons, "themeOption", theme);
+  };
+
+  applyTheme(readTheme());
+
+  themeButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      if (button.dataset.themeOption) {
+        applyTheme(button.dataset.themeOption);
+      }
+    });
+  });
+</script>

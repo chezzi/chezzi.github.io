@@ -1,17 +1,31 @@
 ---
 import "../styles/global.css";
+import ThemeSwitcher from "../components/ThemeSwitcher.astro";
 ---
 
-<html lang="en">
+<html lang="en" data-theme="paper">
   <head>
     <meta charset="UTF-8" />
+    <meta name="color-scheme" content="light dark" />
     <title>Chezzi Physics Notes</title>
+    <script is:inline>
+      try {
+        const savedTheme = localStorage.getItem("chezzi-theme");
+        if (savedTheme) {
+          document.documentElement.dataset.theme = savedTheme;
+        }
+      } catch {
+      }
+    </script>
   </head>
 
   <body>
     <div class="site-container">
       <header class="site-header">
-        <h1>Chezzi</h1>
+        <div class="site-header-bar">
+          <h1>Chezzi</h1>
+          <ThemeSwitcher />
+        </div>
 
         <p>Inflation · Quantum Cosmology · Decoherence</p>
       </header>
